@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { useRouter } from "next/navigation";
+
 
 export default function AddStudentPage() {
     const [name, setName] = useState("");
@@ -10,6 +12,7 @@ export default function AddStudentPage() {
     const [fee, setFee] = useState("");
 
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     async function handleSubmit() {
         if (loading) return;
@@ -41,7 +44,13 @@ export default function AddStudentPage() {
             return;
         }
 
-        alert("Student Added!");
+        setName("");
+        setStudentClass("");
+        setSchool("");
+        setFee("");
+
+        router.push("/students");
+        router.refresh();
     } finally {
         setLoading(false);
     }
@@ -90,8 +99,12 @@ export default function AddStudentPage() {
                 className="w-full p-3 rounded-xl bg-slate-800"
                 />
                 
-                <button onClick={handleSubmit} className="w-full bg-blue-600 p-3 rounded-xl">
-                    Add Student
+                <button
+                    onClick={handleSubmit}
+                    disabled={loading}
+                    className="w-full bg-blue-600 p-3 rounded-xl disabled:opacity-50"
+                >
+                {loading ? "Adding..." : "Add Student"}
                 </button>
             </div>
         </main>
