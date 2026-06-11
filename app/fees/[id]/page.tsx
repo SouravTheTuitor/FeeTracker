@@ -8,7 +8,7 @@ export default async function StudentFeesPage({
 }){
     const { id } = await params;
 
-    const { data: student, error } = await supabase
+    const { data: student} = await supabase
         .from("students")
         .select("*")
         .eq("id", id)
