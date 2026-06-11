@@ -9,6 +9,7 @@ type Student = {
     name: string;
     class: string;
     school: string;
+    joining_date: string | null;
     monthly_fee: number;
 };
 
@@ -22,6 +23,7 @@ export default function EditStudentForm({
     const [name, setName] = useState(student.name);
     const [studentClass, setStudentClass] = useState(student.class);
     const [school, setSchool] = useState(student.school);
+    const [joiningDate, setJoiningDate] = useState(student.joining_date || "");
     const [fee, setFee] = useState(String(student.monthly_fee));
 
     async function handleUpdate() {
@@ -31,6 +33,7 @@ export default function EditStudentForm({
                 name,
                 class: studentClass,
                 school,
+                joining_date: joiningDate,
                 monthly_fee: Number(fee),
             })
             .eq("id", student.id);
@@ -64,6 +67,12 @@ export default function EditStudentForm({
                 placeholder="School"
                 value={school}
                 onChange={(e) => setSchool(e.target.value)}
+                className="w-full p-2 border rounded"
+            />
+            <input 
+                type="date" 
+                value={joiningDate}
+                onChange={(e) => setJoiningDate(e.target.value)}
                 className="w-full p-2 border rounded"
             />
             <input

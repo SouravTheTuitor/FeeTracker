@@ -57,6 +57,10 @@ export default async function StudentProfile({
           </p>
 
           <p>
+            <strong>Joining Date:</strong> {student.joining_date || "Not specified"}
+          </p>
+
+          <p>
             <strong>Monthly Fee:</strong> ₹{student.monthly_fee}
           </p>
 

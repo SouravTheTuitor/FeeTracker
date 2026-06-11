@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+import { join } from "path";
 
 
 export default function AddStudentPage() {
     const [name, setName] = useState("");
     const [studentClass, setStudentClass] = useState("");
     const [school, setSchool] = useState("");
+    const [joiningDate, setJoiningDate] = useState("");
     const [fee, setFee] = useState("");
 
     const [loading, setLoading] = useState(false);
@@ -24,6 +26,7 @@ export default function AddStudentPage() {
             !name.trim() ||
             !studentClass.trim() ||
             !school.trim() ||
+            !joiningDate.trim() ||
             !fee.trim()
         ) {
             alert("Please fill all fields");
@@ -35,6 +38,7 @@ export default function AddStudentPage() {
                 name,
                 class: studentClass,
                 school,
+                joining_date: joiningDate,
                 monthly_fee: Number(fee),
                 status: "Average",
             });
@@ -88,6 +92,15 @@ export default function AddStudentPage() {
                     setSchool(e.target.value)
                 }}
                 className="w-full p-3 rounded-xl bg-slate-800"
+                />
+
+                <input 
+                    type="date" 
+                    value={joiningDate}
+                    onChange={(e) => {
+                        setJoiningDate(e.target.value)
+                    }}
+                    className="w-full p-3 rounded-xl bg-slate-800"
                 />
                 
                 <input type="text" 
