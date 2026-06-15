@@ -32,8 +32,7 @@ export default function AddPaymentForm({
     return (
         <div>
             <input
-                
-            type="number"
+                type="number"
                 placeholder="Amount"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
@@ -54,7 +53,7 @@ export default function AddPaymentForm({
                 <option value="cash">Cash</option>
                 <option value="Bank">Bank</option>
             </select>
-            <button onClick={handleSubmit}>Add Payment</button>
+            <button onClick={handleSubmit}>SAVE PAYMENT</button>
         </div>
     )
 }

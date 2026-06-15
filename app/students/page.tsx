@@ -8,6 +8,9 @@ export default async function StudentPage() {
     .from("students")
     .select("*");
 
+    console.log("Students:", students);
+console.log("Error:", error);
+
   if (error) {
     return (
       <div className="p-4">

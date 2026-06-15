@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { json } from "stream/consumers";
 
 export default async function StudentProfile({
   params,
@@ -15,6 +16,10 @@ export default async function StudentProfile({
     .select("*")
     .eq("id", id)
     .single();
+
+  if (error){
+    return <div> Error: {JSON.stringify(error)}</div>
+  }
 
   if (error || !student) {
     return (
