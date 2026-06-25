@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { getMonthFromJoiningDate } from "@/lib/months";
 
 export default async function StudentFeesPage({
   params,
@@ -34,6 +35,10 @@ export default async function StudentFeesPage({
         0
       )
     : 0;
+  
+  const months = getMonthFromJoiningDate(
+    student.joining_date
+  );
 
   if (!student) {
     return (
@@ -123,7 +128,57 @@ export default async function StudentFeesPage({
         </div>
       </div>
 
-      <div className="bg-slate-800 p-4 rounded-xl mb-4">
+      <div className="mb-6">
+        <h2 className="font-semibold mb-4 text-xl">
+          Monthly Fees
+        </h2>
+
+        <div className="grid grid-cols-2 gap-4">
+          {months.map((month) => {
+            const monthPayments = payments?.filter(
+              (payment) => payment.payment_month === month.value
+            ) || [];
+
+            const totalReceived = monthPayments.reduce(
+              (sum, payment) => sum + payment.amount,
+              0
+            );
+
+            let status;
+            let statusColor;
+
+            if (
+              totalReceived >= student.monthly_fee
+            ) {
+              status = "🟢 Paid";
+              statusColor = "text-green-400";
+            } else if (totalReceived >0){
+              status = "🟡 Partial";
+              statusColor = "text-yellow-400";
+            } else {
+              status = "🔴 Not Paid";
+              statusColor = "text-red-400";
+            }
+            return (
+              <Link
+                key = {month.value}
+                href={`/fees/${id}/${month.value}`}
+                className="bg-slate-800 p-4 rounded-xl hover:bg-slate-700 transition"
+              >
+                <h3 className="font-semibold">
+                  {month.label}
+                </h3>
+
+                <p className={`text-sm mt-2 ${statusColor}`}>
+                  {status}
+                </p>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* <div className="bg-slate-800 p-4 rounded-xl mb-4">
         <h2 className="font-semibold mb-4">
           Payment History
         </h2>
@@ -160,7 +215,7 @@ export default async function StudentFeesPage({
             </p>
           </div>
         ))}
-      </div>
+      </div> */}
 
       <Link
         href={`/fees/${id}/add`}

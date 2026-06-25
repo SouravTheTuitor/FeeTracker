@@ -6,12 +6,14 @@ import { supabase } from "@/lib/supabase";
 
 export default function AddPaymentForm({
     studentId,
+    defaultMonth,
 }: {
     studentId: string;
+    defaultMonth: string;
 }){
     const router = useRouter();
     const [amount, setAmount] = useState("");
-    const [paymentMonth, setPaymentMonth] = useState("");
+    const [paymentMonth, setPaymentMonth] = useState(defaultMonth);
     const [paymentMethod, setPaymentMethod] = useState("cash");
 
     async function handleSubmit() {
